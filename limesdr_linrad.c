@@ -214,9 +214,7 @@ int main(int argc, char** argv)
 		       "  -og <OUTPUT_GAIN_NORMALIZED> (default: 1)\n"
 		       "  -d <DEVICE_INDEX> (default: 0)\n"
 		       "  -ic <CHANNEL_INDEX> (default: 0)\n"
-		       "  -oc <CHANNEL_INDEX> (default: 0)\n"
-		       "  -ia <ANTENNA> (LNAL | LNAH | LNAW) (default: LNAW)\n"
-		       "  -oa <OUTPUT_ANTENNA> (BAND1 | BAND2) (default: BAND1)\n");
+		       "  -oc <CHANNEL_INDEX> (default: 0)\n");
 		return 1;
 	}
 	int i;
