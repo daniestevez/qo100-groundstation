@@ -1,0 +1,4 @@
+#!/bin/sh
+
+mkfifo /tmp/txfifo
+socat -u TCP-LISTEN:6969,fork PIPE:/tmp/txfifo
