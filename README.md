@@ -13,7 +13,8 @@ LimeSDR mini which is connected to a Ku-band LNB for the downlink and a large
 
 My main software solution for the narrowband transponder uses an external
 computer running [Linrad](http://www.sm5bsz.com/linuxdsp/linrad.htm) for RX and
-GNU Radio for TX.
+GNU Radio for TX. See [this blog post](https://destevez.net/2019/08/software-for-my-qo-100-groundstation/)
+for more information.
 
 To run this software you must:
 
