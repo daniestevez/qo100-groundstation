@@ -218,8 +218,8 @@ int main(int argc, char** argv)
 		return 1;
 	}
 	int i;
-	unsigned int in_freq = 0, out_freq = 0;
-	float in_if_freq = 0, out_if_freq = 0;
+	double in_freq = 0, out_freq = 0;
+	double in_if_freq = 0, out_if_freq = 0;
 	double in_lo_freq = 0, out_lo_freq = 0;
 	double in_lpf_bw = 0, out_lpf_bw = 0;
 	double bandwidth_calibrating = 8e6;
