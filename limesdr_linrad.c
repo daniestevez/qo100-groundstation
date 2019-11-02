@@ -214,7 +214,8 @@ int main(int argc, char** argv)
 		       "  -og <OUTPUT_GAIN_NORMALIZED> (default: 1)\n"
 		       "  -d <DEVICE_INDEX> (default: 0)\n"
 		       "  -ic <CHANNEL_INDEX> (default: 0)\n"
-		       "  -oc <CHANNEL_INDEX> (default: 0)\n");
+		       "  -oc <CHANNEL_INDEX> (default: 0)\n"
+		       "  -r <REFERENCE_CLOCK> (default: do not change))\n");
 		return 1;
 	}
 	int i;
@@ -227,6 +228,7 @@ int main(int argc, char** argv)
 	double in_gain = 1, out_gain = 1;
 	unsigned int device_i = 0;
 	unsigned int in_channel = 0, out_channel = 0;
+	double reference_clock = 0;
 	for ( i = 1; i < argc-1; i += 2 ) {
 		if      (strcmp(argv[i], "-if") == 0) { in_freq = atof( argv[i+1] ); }
 		else if (strcmp(argv[i], "-ii") == 0) { in_if_freq = atof(argv[i+1]); }
@@ -243,6 +245,7 @@ int main(int argc, char** argv)
 		else if (strcmp(argv[i], "-d") == 0) { device_i = atoi( argv[i+1] ); }
 		else if (strcmp(argv[i], "-ic") == 0) { in_channel = atoi( argv[i+1] ); }
 		else if (strcmp(argv[i], "-oc") == 0) { out_channel = atoi( argv[i+1] ); }
+		else if (strcmp(argv[i], "-r") == 0) { reference_clock = atof(argv[i+1]); }
 	}
 	if (in_freq == 0) {
 		fprintf(stderr, "ERROR: invalid RX frequency\n");
@@ -269,6 +272,14 @@ int main(int argc, char** argv)
 	if (limesdr_open(device_i, &device) < 0) {
 		exit(1);
 	}
+
+	if (reference_clock > 0) {
+		if (LMS_SetClockFreq(device, LMS_CLOCK_REF, reference_clock) < 0) {
+			fprintf(stderr, "LMS_SetClockFreq() : %s\n", LMS_GetLastErrorMessage());
+			exit(1);
+		}
+	}
+
 	if (limesdr_enable_channels(device, in_channel, out_channel) < 0) {
 		exit(1);
 	}
