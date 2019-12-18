@@ -2,4 +2,5 @@
 ./limesdr_linrad -s 300e3 -b 3e6 -ob 3e6 \
 		 -if 10489.675e6 -ii 0.5e6 -il 9750e6 \
 		 -of 2400.175e6 -oi 2e6 \
-		 -ig 0.2 -og 0.8 -r 27e6
+		 -ig 0.2 -og 0.8 -r 27e6 \
+		 -ip 10.49.33.8

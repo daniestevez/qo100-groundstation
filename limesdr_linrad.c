@@ -215,7 +215,8 @@ int main(int argc, char** argv)
 		       "  -d <DEVICE_INDEX> (default: 0)\n"
 		       "  -ic <CHANNEL_INDEX> (default: 0)\n"
 		       "  -oc <CHANNEL_INDEX> (default: 0)\n"
-		       "  -r <REFERENCE_CLOCK> (default: do not change))\n");
+		       "  -r <REFERENCE_CLOCK> (default: do not change))\n"
+		       "  -ip <IP TO SEND UDP>\n");
 		return 1;
 	}
 	int i;
@@ -229,6 +230,7 @@ int main(int argc, char** argv)
 	unsigned int device_i = 0;
 	unsigned int in_channel = 0, out_channel = 0;
 	double reference_clock = 0;
+	char *ip = NULL;
 	for ( i = 1; i < argc-1; i += 2 ) {
 		if      (strcmp(argv[i], "-if") == 0) { in_freq = atof( argv[i+1] ); }
 		else if (strcmp(argv[i], "-ii") == 0) { in_if_freq = atof(argv[i+1]); }
@@ -246,6 +248,7 @@ int main(int argc, char** argv)
 		else if (strcmp(argv[i], "-ic") == 0) { in_channel = atoi( argv[i+1] ); }
 		else if (strcmp(argv[i], "-oc") == 0) { out_channel = atoi( argv[i+1] ); }
 		else if (strcmp(argv[i], "-r") == 0) { reference_clock = atof(argv[i+1]); }
+		else if (strcmp(argv[i], "-ip") == 0) { ip = argv[i+1]; }
 	}
 	if (in_freq == 0) {
 		fprintf(stderr, "ERROR: invalid RX frequency\n");
@@ -255,12 +258,16 @@ int main(int argc, char** argv)
 		fprintf(stderr, "ERROR: invalid TX frequency\n");
 		exit(1);
 	}
+	if (!ip) {
+		fprintf(stderr, "Need to specify send IP\n");
+		exit(1);
+	}
 
 	int linrad_udp_socket;
 	struct sockaddr_in linrad_udp_sockaddr;
 	static struct linrad_udp_packet udp_packet;
 
-	if (open_linrad_udp_socket(&linrad_udp_socket, &linrad_udp_sockaddr, "239.255.0.0") < 0) {
+	if (open_linrad_udp_socket(&linrad_udp_socket, &linrad_udp_sockaddr, ip) < 0) {
 		perror("Could not open Linrad UDP socket");
 		exit(1);
 	}
